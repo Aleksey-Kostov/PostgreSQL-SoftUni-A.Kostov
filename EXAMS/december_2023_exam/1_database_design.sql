@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS customers(
 	"id" SERIAL PRIMARY KEY,
 	first_name VARCHAR(25) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
-	gender CHAR(1) CHECK (gender IN ('M', 'F')) NOT NULL,
+	gender CHAR(1) CHECK (gender IN ('M', 'F')),
 	age INT CHECK (age > 0) NOT NULL,
-	phone_mumber CHAR(10) NOT NULL,
+	phone_number CHAR(10) NOT NULL,
 	country_id INT REFERENCES countries(id) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL
 );
 
