@@ -1,7 +1,6 @@
 CREATE OR REPLACE PROCEDURE sp_animals_with_owners_or_not(
 	IN animal_name VARCHAR(30),
-	OUT name_owner VARCHAR(100)
-)
+	OUT owner_name TEXT)
 AS 
 $$
 BEGIN
@@ -11,12 +10,12 @@ BEGIN
     ELSE 'For adoption'
     END
     INTO
-    name_owner
+    owner_name
     FROM 
     animals AS a 
-    JOIN owners AS o 
+    LEFT JOIN owners AS o 
     ON a.owner_id = o.id
-    WHERE o.name = animal_name;
+    WHERE a.name = animal_name;
 END;
 $$
 LANGUAGE plpgsql;
