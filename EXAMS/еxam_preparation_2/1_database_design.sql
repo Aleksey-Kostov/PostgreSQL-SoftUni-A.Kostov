@@ -8,11 +8,17 @@ CREATE TABLE IF NOT EXISTS categories(
     "name" VARCHAR(10) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS clients(
+    "id" SERIAL PRIMARY KEY UNIQUE,
+    full_name VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS drivers(
     "id" SERIAL PRIMARY KEY UNIQUE,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    age INT CHECK age > 0 NOT NULL,
+    age INT NOT NULL CHECK (age > 0),
     rating NUMERIC(2) DEFAULT 5.5
 );
 
@@ -20,8 +26,8 @@ CREATE TABLE IF NOT EXISTS cars(
     "id" SERIAL PRIMARY KEY UNIQUE,
     make VARCHAR(20) NOT NULL,
     model VARCHAR(20),
-    "year" INT DEFAULT 0 CHECK "year" > 0 NOT NULL,
-    mileage INT DEFAULT 0 CHECK "year" > 0,
+    "year" INT DEFAULT 0 NOT NULL CHECK ("year" > 0),
+    mileage INT DEFAULT 0 CHECK (mileage > 0),
     condition CHAR(1) NOT NULL,
     category_id INT REFERENCES categories(id) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL
 );
@@ -30,7 +36,7 @@ CREATE TABLE IF NOT EXISTS courses(
     "id" SERIAL PRIMARY KEY UNIQUE,
     from_address_id INT REFERENCES addresses(id) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
     "start" TIMESTAMP NOT NULL,
-    bill NUMERIC(10, 2) DEFAULT 10 CHECK bill > 10,
+    bill NUMERIC(10, 2) DEFAULT 10 CHECK (bill > 0),
     car_id INT REFERENCES cars(id) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
     client_id INT REFERENCES clients(id) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL
 );
@@ -39,3 +45,4 @@ CREATE TABLE IF NOT EXISTS cars_drivers(
     car_id INT REFERENCES cars(id) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL,
     driver_id INT REFERENCES drivers(id) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL
 );
+
