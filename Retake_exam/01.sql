@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS productions (
     "id" SERIAL PRIMARY KEY UNIQUE,
     title VARCHAR(70) NOT NULL UNIQUE,
     country_id INT NOT NULL,
-    production_info_id INT NOT NULL,
+    production_info_id INT NOT NULL UNIQUE,
     FOREIGN KEY (country_id) REFERENCES countries("id") ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (production_info_id) REFERENCES productions_info("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
